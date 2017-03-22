@@ -1,0 +1,49 @@
+<idea-plugin version="2">
+    <id>nl.capaxit.declarationviz</id>
+    <name>DeclarationViz</name>
+    <version>1.0</version>
+    <vendor email="jcraane@gmail.com" url="http://www.capaxit.nl">Capax IT</vendor>
+    <idea-version since-build="145.1" until-build="163.*"/>
+
+    <description><![CDATA[
+        <h4>Declaration Visualization</h4>
+        </br></br>
+        todo
+    ]]></description>
+
+    <change-notes><![CDATA[
+      <ul>
+        <li>Initial version.</li>
+      </ul>
+    ]]>
+    </change-notes>
+
+<!--
+    <extensions defaultExtensionNs="com.intellij">
+        <configurationType implementation="nl.capaxit.tooltiprunner.TooltipRunConfigurationType"/>
+        <runConfigurationProducer implementation="nl.capaxit.tooltiprunner.TooltipRunnerProducer"/>
+    </extensions>
+-->
+
+    <actions>
+        <!-- Add your actions here -->
+        <action id="org.jetbrains.tutorials.actions.SimpleAction" class="nl.capaxit.declarationviz.TestAction" text="Simple Action" description="IntelliJ Action System Demo">
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+        </action>
+    </actions>
+
+<!--
+    <actions>
+        <action class="nl.capaxit.tooltiprunner.TooltipRunnerAction"
+                id="nl.capaxit.tooltiprunner.action"
+                description="Runs the corrent class with the tooltip runner."
+                text="Run with TooltipRunner"
+                icon="/icons/tooltip_run_icon.png">
+            <add-to-group group-id="RunMenu" anchor="first"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="alt ctrl T"/>
+            <keyboard-shortcut keymap="Mac OS X" first-keystroke="alt ctrl T"/>
+            <keyboard-shortcut keymap="Mac OS X 10.5+" first-keystroke="alt ctrl T"/>
+        </action>
+    </actions>
+-->
+</idea-plugin>

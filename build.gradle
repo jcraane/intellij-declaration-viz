@@ -1,0 +1,45 @@
+buildscript {
+    repositories {
+        maven { url 'http://dl.bintray.com/jetbrains/intellij-plugin-service' }
+        mavenCentral()
+    }
+}
+
+plugins {
+    id 'org.jetbrains.intellij' version "0.1.9"
+}
+
+apply plugin: 'idea'
+apply plugin: 'org.jetbrains.intellij'
+apply plugin: 'java'
+
+sourceCompatibility = javaVersion
+targetCompatibility = javaVersion
+
+sourceSets {
+    main {
+        java.srcDirs 'src'
+        resources.srcDir 'resources'
+    }
+}
+
+intellij {
+    version ideaVersion
+    pluginName 'DeclarationViz'
+    updateSinceUntilBuild false
+}
+
+group 'nl.capaxit'
+version pluginVersion // Plugin version
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.2.1' //version required
+}
+
+idea {
+    project {
+        jdkName = javaVersion
+        languageLevel = javaVersion
+        vcs = 'Git'
+    }
+}
