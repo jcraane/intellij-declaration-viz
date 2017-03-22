@@ -40,12 +40,11 @@ public class TestAction extends AnAction {
         if (parent != null) {
             final PsiElement declaration = parent.resolve();
             final Point declarationPosition = editor.visualPositionToXY(editor.offsetToVisualPosition(declaration.getTextOffset()));
-//            final Point declarationPosition = editor.visualPositionToXY(editor.offsetToVisualPosition(declaration.getChildren()[6].getTextOffset()));
             final Graphics graphics = editor.getComponent().getGraphics();
             graphics.setColor(new Color(131, 142, 255, 128));
             ((Graphics2D) graphics).setStroke(new BasicStroke(3));
             final int xOffset = 25;
-            final int elementXOffSet = 50;
+            final int elementXOffSet = 50; // todo there must be a better way to determine this offset.
             final int yOffset = 10;
             graphics.drawLine(point.x + xOffset, point.y + yOffset, declarationPosition.x + elementXOffSet, declarationPosition.y);
         }

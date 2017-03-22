@@ -3,7 +3,7 @@
     <name>DeclarationViz</name>
     <version>1.0</version>
     <vendor email="jcraane@gmail.com" url="http://www.capaxit.nl">Capax IT</vendor>
-    <idea-version since-build="145.1" until-build="163.*"/>
+    <idea-version since-build="145.1" until-build="171.*"/>
 
     <description><![CDATA[
         <h4>Declaration Visualization</h4>
@@ -29,6 +29,7 @@
         <!-- Add your actions here -->
         <action id="org.jetbrains.tutorials.actions.SimpleAction" class="nl.capaxit.declarationviz.TestAction" text="Simple Action" description="IntelliJ Action System Demo">
             <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="shift meta I"/>
         </action>
     </actions>
 
