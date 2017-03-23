@@ -37,6 +37,7 @@ public class UsageVisualizerAction extends AnAction {
 
         final PsiReferenceExpression parent = PsiTreeUtil.getParentOfType(elementAtCaret, PsiReferenceExpression.class);
         if (parent != null) {
+            final int verticalScrollOffset = editor.getScrollingModel().getVerticalScrollOffset();
             final PsiElement declaration = parent.resolve();
             final Point declarationPosition = editor.visualPositionToXY(editor.offsetToVisualPosition(declaration.getTextOffset()));
             final Graphics graphics = editor.getComponent().getGraphics();
@@ -44,8 +45,8 @@ public class UsageVisualizerAction extends AnAction {
             ((Graphics2D) graphics).setStroke(new BasicStroke(3));
             final int xOffset = 25;
             final int elementXOffSet = 50; // todo there must be a better way to determine this offset.
-            final int yOffset = 10;
-            graphics.drawLine(point.x + xOffset, point.y + yOffset, declarationPosition.x + elementXOffSet, declarationPosition.y);
+            final int yOffset = 0;
+            graphics.drawLine(point.x + xOffset, point.y + yOffset - verticalScrollOffset, declarationPosition.x + elementXOffSet, declarationPosition.y - verticalScrollOffset);
         }
     }
 }
