@@ -1,4 +1,4 @@
-package nl.capaxit.declarationviz;
+package nl.capaxit.idea.plugins.usagevisualizer;
 
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -22,7 +22,7 @@ import java.awt.*;
  *
  * Created by jamiecraane on 25/10/2016.
  */
-public class TestAction extends AnAction {
+public class UsageVisualizerAction extends AnAction {
     @Override
     public void actionPerformed(final AnActionEvent e) {
         final Project project = e.getData(CommonDataKeys.PROJECT);
@@ -35,7 +35,6 @@ public class TestAction extends AnAction {
 
         final PsiElement elementAtCaret = psiFile.findElementAt(caretModel.getOffset());
 
-//        1. first we find the parent PsiReferenceExpression
         final PsiReferenceExpression parent = PsiTreeUtil.getParentOfType(elementAtCaret, PsiReferenceExpression.class);
         if (parent != null) {
             final PsiElement declaration = parent.resolve();
