@@ -88,6 +88,7 @@ public class UsageVisualizerAction extends AnAction {
         final Graphics graphics = editor.getComponent().getGraphics();
         graphics.setColor(new Color(131, 142, 255, 128));
         ((Graphics2D) graphics).setStroke(new BasicStroke(2));
+        ((Graphics2D) graphics).setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
         lines.forEach(line -> graphics.drawLine(line.getStart().x, line.getStart().y, line.getEnd().x, line.getEnd().y));
     }
 
