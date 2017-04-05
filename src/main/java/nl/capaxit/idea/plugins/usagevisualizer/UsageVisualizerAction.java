@@ -4,13 +4,9 @@ import com.intellij.codeInsight.TargetElementUtil;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
-import com.intellij.openapi.editor.CaretModel;
-import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiDocumentManager;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiReference;
 import com.intellij.psi.search.searches.ReferencesSearch;
 import org.jetbrains.annotations.NotNull;
@@ -41,11 +37,6 @@ public class UsageVisualizerAction extends AnAction {
             return;
         }
 
-        final PsiElement elementAtCaret = findElementAtCaret(project, editor);
-        if (elementAtCaret == null) {
-            return;
-        }
-
         final PsiElement targetElement = TargetElementUtil.findTargetElement(editor, TargetElementUtil.getInstance().getReferenceSearchFlags());
         if (targetElement != null) {
             findAndDrawUsagesLines(editor, targetElement);
@@ -69,13 +60,6 @@ public class UsageVisualizerAction extends AnAction {
         final PsiElement element = reference.getElement();
         final Point elementPosition = editor.visualPositionToXY(editor.offsetToVisualPosition(element.getTextOffset()));
         return Arrow.create(declarationPoint, new Point(elementPosition.x + elementXOffset, elementPosition.y - verticalScrollOffset));
-    }
-
-    private PsiElement findElementAtCaret(final Project project, final Editor editor) {
-        final CaretModel caretModel = editor.getCaretModel();
-        final Document document = editor.getDocument();
-        final PsiFile psiFile = PsiDocumentManager.getInstance(project).getPsiFile(document);
-        return psiFile.findElementAt(caretModel.getOffset());
     }
 
     @Override
