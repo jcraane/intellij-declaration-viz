@@ -15,6 +15,7 @@ import com.intellij.psi.PsiReference;
 import com.intellij.psi.search.searches.ReferencesSearch;
 import org.jetbrains.annotations.NotNull;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.Collection;
 
@@ -58,9 +59,11 @@ public class UsageVisualizerAction extends AnAction {
         final Point declarationPosition = editor.visualPositionToXY(editor.offsetToVisualPosition(declaration.getTextOffset()));
         final Point declarationPoint = new Point(declarationPosition.x + elementXOffset, declarationPosition.y - verticalScrollOffset);
         final Collection<PsiReference> references = ReferencesSearch.search(declaration).findAll();
-        references.stream()
-                .map(reference -> createUsageLineSpec(editor, verticalScrollOffset, elementXOffset, declarationPoint, reference))
-                .forEach(line -> line.draw((Graphics2D) editor.getComponent().getGraphics()));
+        SwingUtilities.invokeLater(() -> {
+            references.stream()
+                    .map(reference -> createUsageLineSpec(editor, verticalScrollOffset, elementXOffset, declarationPoint, reference))
+                    .forEach(line -> line.draw((Graphics2D) editor.getComponent().getGraphics()));
+        });
     }
 
     @NotNull
