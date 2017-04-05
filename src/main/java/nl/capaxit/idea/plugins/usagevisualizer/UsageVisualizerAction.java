@@ -10,6 +10,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiDocumentManager;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiLocalVariable;
 import com.intellij.psi.PsiReference;
 import com.intellij.psi.PsiReferenceExpression;
 import com.intellij.psi.search.searches.ReferencesSearch;
@@ -18,8 +19,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Simple action for testing various Idea plugin parts. Action should be invoked when hovering over
@@ -50,31 +49,29 @@ public class UsageVisualizerAction extends AnAction {
 
         final PsiReferenceExpression parent = PsiTreeUtil.getParentOfType(elementAtCaret, PsiReferenceExpression.class);
         if (parent != null) {
-            findAndDrawUsagesLines(editor, parent);
+            findAndDrawUsagesLines(editor, parent.resolve());
+        } else {
+            findAndDrawUsagesLines(editor, PsiTreeUtil.getParentOfType(elementAtCaret, PsiLocalVariable.class));
         }
     }
 
-    private void findAndDrawUsagesLines(final Editor editor, final PsiReferenceExpression parent) {
+    private void findAndDrawUsagesLines(final Editor editor, final PsiElement declaration) {
         final int verticalScrollOffset = editor.getScrollingModel().getVerticalScrollOffset();
         final int elementXOffset = FIXED_X_OFFSET;
-
-        final PsiElement declaration = parent.resolve();
 
         final Point declarationPosition = editor.visualPositionToXY(editor.offsetToVisualPosition(declaration.getTextOffset()));
         final Point declarationPoint = new Point(declarationPosition.x + elementXOffset, declarationPosition.y - verticalScrollOffset);
         final Collection<PsiReference> references = ReferencesSearch.search(declaration).findAll();
-        final List<LineSpec> lines = references.stream()
+        references.stream()
                 .map(reference -> createUsageLineSpec(editor, verticalScrollOffset, elementXOffset, declarationPoint, reference))
-                .collect(Collectors.toList());
-
-        drawLines(lines, editor);
+                .forEach(line -> line.draw((Graphics2D) editor.getComponent().getGraphics()));
     }
 
     @NotNull
-    private LineSpec createUsageLineSpec(final Editor editor, final int verticalScrollOffset, final int elementXOffset, final Point declarationPoint, final PsiReference reference) {
+    private Arrow createUsageLineSpec(final Editor editor, final int verticalScrollOffset, final int elementXOffset, final Point declarationPoint, final PsiReference reference) {
         final PsiElement element = reference.getElement();
         final Point elementPosition = editor.visualPositionToXY(editor.offsetToVisualPosition(element.getTextOffset()));
-        return LineSpec.create(declarationPoint, new Point(elementPosition.x + elementXOffset, elementPosition.y - verticalScrollOffset));
+        return Arrow.create(declarationPoint, new Point(elementPosition.x + elementXOffset, elementPosition.y - verticalScrollOffset));
     }
 
     private PsiElement findElementAtCaret(final Project project, final Editor editor) {
@@ -82,14 +79,6 @@ public class UsageVisualizerAction extends AnAction {
         final Document document = editor.getDocument();
         final PsiFile psiFile = PsiDocumentManager.getInstance(project).getPsiFile(document);
         return psiFile.findElementAt(caretModel.getOffset());
-    }
-
-    private void drawLines(final List<LineSpec> lines, final Editor editor) {
-        final Graphics graphics = editor.getComponent().getGraphics();
-        graphics.setColor(new Color(131, 142, 255, 128));
-        ((Graphics2D) graphics).setStroke(new BasicStroke(2));
-        ((Graphics2D) graphics).setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
-        lines.forEach(line -> graphics.drawLine(line.getStart().x, line.getStart().y, line.getEnd().x, line.getEnd().y));
     }
 
     @Override
