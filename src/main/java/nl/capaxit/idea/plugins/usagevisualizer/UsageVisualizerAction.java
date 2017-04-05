@@ -11,6 +11,7 @@ import com.intellij.psi.PsiDocumentManager;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiLocalVariable;
+import com.intellij.psi.PsiMethod;
 import com.intellij.psi.PsiReference;
 import com.intellij.psi.PsiReferenceExpression;
 import com.intellij.psi.search.searches.ReferencesSearch;
@@ -51,7 +52,12 @@ public class UsageVisualizerAction extends AnAction {
         if (parent != null) {
             findAndDrawUsagesLines(editor, parent.resolve());
         } else {
-            findAndDrawUsagesLines(editor, PsiTreeUtil.getParentOfType(elementAtCaret, PsiLocalVariable.class));
+            final PsiLocalVariable localVariableDeclaration = PsiTreeUtil.getParentOfType(elementAtCaret, PsiLocalVariable.class);
+            if (localVariableDeclaration != null) {
+                findAndDrawUsagesLines(editor, localVariableDeclaration);
+            } else {
+                findAndDrawUsagesLines(editor, PsiTreeUtil.getParentOfType(elementAtCaret, PsiMethod.class));
+            }
         }
     }
 
