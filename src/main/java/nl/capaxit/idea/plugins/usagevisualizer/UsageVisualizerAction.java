@@ -1,5 +1,6 @@
 package nl.capaxit.idea.plugins.usagevisualizer;
 
+import com.intellij.codeInsight.TargetElementUtil;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
@@ -10,12 +11,8 @@ import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiDocumentManager;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiLocalVariable;
-import com.intellij.psi.PsiMethod;
 import com.intellij.psi.PsiReference;
-import com.intellij.psi.PsiReferenceExpression;
 import com.intellij.psi.search.searches.ReferencesSearch;
-import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
@@ -48,17 +45,9 @@ public class UsageVisualizerAction extends AnAction {
             return;
         }
 
-//        todo investigate if this can be simpler.
-        final PsiReferenceExpression parent = PsiTreeUtil.getParentOfType(elementAtCaret, PsiReferenceExpression.class);
-        if (parent != null) {
-            findAndDrawUsagesLines(editor, parent.resolve());
-        } else {
-            final PsiLocalVariable localVariableDeclaration = PsiTreeUtil.getParentOfType(elementAtCaret, PsiLocalVariable.class);
-            if (localVariableDeclaration != null) {
-                findAndDrawUsagesLines(editor, localVariableDeclaration);
-            } else {
-                findAndDrawUsagesLines(editor, PsiTreeUtil.getParentOfType(elementAtCaret, PsiMethod.class));
-            }
+        final PsiElement targetElement = TargetElementUtil.findTargetElement(editor, TargetElementUtil.getInstance().getReferenceSearchFlags());
+        if (targetElement != null) {
+            findAndDrawUsagesLines(editor, targetElement);
         }
     }
 
