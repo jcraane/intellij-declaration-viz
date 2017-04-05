@@ -48,6 +48,7 @@ public class UsageVisualizerAction extends AnAction {
             return;
         }
 
+//        todo investigate if this can be simpler.
         final PsiReferenceExpression parent = PsiTreeUtil.getParentOfType(elementAtCaret, PsiReferenceExpression.class);
         if (parent != null) {
             findAndDrawUsagesLines(editor, parent.resolve());
