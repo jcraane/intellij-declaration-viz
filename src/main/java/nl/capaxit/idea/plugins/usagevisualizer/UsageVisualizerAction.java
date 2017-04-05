@@ -59,11 +59,9 @@ public class UsageVisualizerAction extends AnAction {
         final Point declarationPosition = editor.visualPositionToXY(editor.offsetToVisualPosition(declaration.getTextOffset()));
         final Point declarationPoint = new Point(declarationPosition.x + elementXOffset, declarationPosition.y - verticalScrollOffset);
         final Collection<PsiReference> references = ReferencesSearch.search(declaration).findAll();
-        SwingUtilities.invokeLater(() -> {
-            references.stream()
-                    .map(reference -> createUsageLineSpec(editor, verticalScrollOffset, elementXOffset, declarationPoint, reference))
-                    .forEach(line -> line.draw((Graphics2D) editor.getComponent().getGraphics()));
-        });
+        SwingUtilities.invokeLater(() -> references.stream()
+                .map(reference -> createUsageLineSpec(editor, verticalScrollOffset, elementXOffset, declarationPoint, reference))
+                .forEach(line -> line.draw((Graphics2D) editor.getComponent().getGraphics())));
     }
 
     @NotNull
