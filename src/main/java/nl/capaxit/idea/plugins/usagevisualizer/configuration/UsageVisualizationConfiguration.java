@@ -2,12 +2,14 @@ package nl.capaxit.idea.plugins.usagevisualizer.configuration;
 
 import com.intellij.openapi.options.BaseConfigurable;
 import com.intellij.openapi.options.ConfigurationException;
+import com.intellij.ui.ColorPicker;
 import com.intellij.ui.components.panels.HorizontalBox;
 import com.intellij.ui.components.panels.VerticalBox;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * Created by jamiecraane on 06/04/2017.
@@ -37,7 +39,8 @@ public class UsageVisualizationConfiguration extends BaseConfigurable {
 
         final HorizontalBox colorHolder = new HorizontalBox();
         colorHolder.add(new JLabel("Line color"));
-        colorHolder.add(new JColorChooser());
+        colorHolder.add(new ColorPicker(() -> {
+        }, new Color(100, 100, 100), true));
         root.add(colorHolder);
 
         jPanel.add(root);
