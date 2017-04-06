@@ -59,9 +59,8 @@ public class UsageVisualizerAction extends AnAction {
     private UsageVisualization createUsageLineSpec(final Editor editor, final int verticalScrollOffset, final int elementXOffset, final Point declarationPoint, final PsiReference reference) {
         final PsiElement element = reference.getElement();
         final Point elementPosition = editor.visualPositionToXY(editor.offsetToVisualPosition(element.getTextOffset()));
-//        return Arrow.create(declarationPoint, new Point(elementPosition.x + elementXOffset, elementPosition.y - verticalScrollOffset));
-        return new BezierCurve(declarationPoint, new Point(elementPosition.x + elementXOffset, elementPosition.y - verticalScrollOffset));
-//        return Arrow.create(declarationPoint, new Point(elementPosition.x + elementXOffset, elementPosition.y - verticalScrollOffset));
+        return Arrow.create(declarationPoint, new Point(elementPosition.x + elementXOffset, elementPosition.y - verticalScrollOffset));
+//        return new BezierCurve(declarationPoint, new Point(elementPosition.x + elementXOffset, elementPosition.y - verticalScrollOffset));
     }
 
     @Override
