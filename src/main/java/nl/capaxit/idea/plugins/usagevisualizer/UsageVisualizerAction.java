@@ -23,7 +23,7 @@ import java.util.Collection;
  */
 public class UsageVisualizerAction extends AnAction {
     // todo there must be a better way to determine this offset.
-    public static final int FIXED_X_OFFSET = 100;
+    public static final int FIXED_X_OFFSET = 75;
 
     @Override
     public void actionPerformed(final AnActionEvent e) {

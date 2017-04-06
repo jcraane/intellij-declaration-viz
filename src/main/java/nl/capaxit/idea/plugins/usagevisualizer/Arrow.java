@@ -45,14 +45,23 @@ public final class Arrow implements UsageVisualization {
         graphics.setColor(new Color(131, 142, 255, 128));
         graphics.setStroke(new BasicStroke(2));
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        graphics.drawLine(start.x, start.y, end.x, end.y);
+        graphics.drawLine(start.x, start.y, end.x - 2, end.y - 2);
 
-        tx.setToIdentity();
-        double angle = Math.atan2(end.y-start.y, end.x-start.x);
-        tx.translate(end.x, end.y);
-        tx.rotate((angle-Math.PI/2d));
+        final int dx = end.x - start.x, dy = end.y - start.y;
+        double D = Math.sqrt(dx*dx + dy*dy);
+        double xm = D - 10, xn = xm, ym = 5, yn = -5, x;
+        double sin = dy/D, cos = dx/D;
 
-        graphics.setTransform(tx);
-        graphics.fill(arrowHead);
+        x = xm*cos - ym*sin + start.x;
+        ym = xm*sin + ym*cos + start.y;
+        xm = x;
+
+        x = xn*cos - yn*sin + start.x;
+        yn = xn*sin + yn*cos + start.y;
+        xn = x;
+
+        final int[] xpoints = {end.x, (int) xm, (int) xn};
+        final int[] ypoints = {end.y, (int) ym, (int) yn};
+        graphics.fillPolygon(xpoints, ypoints, 3);
     }
 }
