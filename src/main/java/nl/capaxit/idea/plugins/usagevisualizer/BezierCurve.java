@@ -9,6 +9,7 @@ import java.awt.geom.QuadCurve2D;
 public class BezierCurve implements UsageVisualization {
     private static final int Y_OFFSET = 10;
     private static final int START_X = 100;
+    public static final int X_OFFSET = 30;
     private final Point start, end;
 
     /**
@@ -40,7 +41,7 @@ public class BezierCurve implements UsageVisualization {
         } else {
             ctrlY = endY + Math.abs(endY - startY) / 2;
         }
-        int ctrlX = START_X - 30;
+        int ctrlX = START_X - X_OFFSET;
         final QuadCurve2D.Float curve = new QuadCurve2D.Float(START_X, startY, ctrlX, ctrlY, START_X, endY);
         graphics.draw(curve);
 
@@ -48,16 +49,16 @@ public class BezierCurve implements UsageVisualization {
     }
 
     private void drawArrowTip(final Graphics2D graphics, final int endY, final int ctrlY) {
-        final int dx = START_X - (START_X - 30), dy = endY - ctrlY;
+        final int dx = START_X - (START_X - X_OFFSET), dy = endY - ctrlY;
         double D = Math.sqrt(dx*dx + dy*dy);
         double xm = D - 10, xn = xm, ym = 5, yn = -5, x;
         double sin = dy/D, cos = dx/D;
 
-        x = xm*cos - ym*sin + START_X - 30;
+        x = xm*cos - ym*sin + START_X - X_OFFSET;
         ym = xm*sin + ym*cos + ctrlY;
         xm = x;
 
-        x = xn*cos - yn*sin + START_X - 30;
+        x = xn*cos - yn*sin + START_X - X_OFFSET;
         yn = xn*sin + yn*cos + ctrlY;
         xn = x;
 
