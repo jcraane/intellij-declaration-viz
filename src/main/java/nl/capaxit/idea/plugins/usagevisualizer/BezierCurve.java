@@ -4,6 +4,8 @@ import java.awt.*;
 import java.awt.geom.QuadCurve2D;
 
 /**
+ * todo provide a better endX position so that the curve points more towards the element instead of a fixed offset.
+ *
  * Created by jamiecraane on 06/04/2017.
  */
 public class BezierCurve implements UsageVisualization {

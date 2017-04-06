@@ -25,4 +25,8 @@
             <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl F7"/>
         </action>
     </actions>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationConfigurable instance="nl.capaxit.idea.plugins.usagevisualizer.configuration.UsageVisualizationConfiguration"/>
+    </extensions>
 </idea-plugin>
