@@ -1,4 +1,4 @@
-package nl.capaxit.idea.plugins.usagevisualizer;
+package nl.capaxit.idea.plugins.usagevisualizer.visualizations;
 
 import java.awt.*;
 

@@ -44,8 +44,12 @@ public class BezierCurve implements UsageVisualization {
         } else {
             ctrlY = endY + Math.abs(endY - startY) / 2;
         }
+//        int ctrlX = START_X - X_OFFSET;
         int ctrlX = START_X - X_OFFSET;
-        final QuadCurve2D.Float curve = new QuadCurve2D.Float(START_X, startY, ctrlX, ctrlY, START_X, endY);
+//        impl 1.
+//        final QuadCurve2D.Float curve = new QuadCurve2D.Float(START_X, startY, ctrlX, ctrlY, START_X, endY);
+//        impl 3.
+        final QuadCurve2D.Float curve = new QuadCurve2D.Float(start.x, startY, ctrlX, ctrlY, end.x, endY);
         graphics.draw(curve);
 
         drawArrowTip(graphics, endY, ctrlY);

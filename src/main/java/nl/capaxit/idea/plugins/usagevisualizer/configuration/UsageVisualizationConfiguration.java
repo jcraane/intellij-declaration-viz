@@ -12,6 +12,8 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
+ * Configuration component for the Usage Visualizer plugin.
+ *
  * Created by jamiecraane on 06/04/2017.
  */
 public class UsageVisualizationConfiguration extends BaseConfigurable {
