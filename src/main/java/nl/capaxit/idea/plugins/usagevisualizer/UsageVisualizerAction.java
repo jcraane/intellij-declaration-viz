@@ -9,9 +9,8 @@ import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiReference;
 import com.intellij.psi.search.searches.ReferencesSearch;
-import nl.capaxit.idea.plugins.usagevisualizer.visualizations.BezierCurve;
 import nl.capaxit.idea.plugins.usagevisualizer.visualizations.UsageVisualization;
-import org.jetbrains.annotations.NotNull;
+import nl.capaxit.idea.plugins.usagevisualizer.visualizations.VisualizationFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -62,28 +61,11 @@ public class UsageVisualizerAction extends AnAction {
         final Collection<PsiReference> references = ReferencesSearch.search(declaration).findAll();
 
         final java.util.List<UsageVisualization> visualizations = references.stream()
-                .map(reference -> createUsageLineSpec(editor, verticalScrollOffset, declarationPoint, reference))
+                .map(reference -> VisualizationFactory.create(editor, verticalScrollOffset, declarationPoint, reference, FIXED_X_OFFSET))
                 .collect(Collectors.toList());
 
         SwingUtilities.invokeLater(() -> visualizations
                 .forEach(line -> line.draw((Graphics2D) editor.getComponent().getGraphics())));
-    }
-
-    @NotNull
-    private UsageVisualization createUsageLineSpec(final Editor editor, final int verticalScrollOffset, final Point declarationPoint, final PsiReference reference) {
-        final PsiElement element = reference.getElement();
-        final Point elementPosition = editor.visualPositionToXY(editor.offsetToVisualPosition(element.getTextOffset()));
-
-        //        todo move this creation to a factory class.
-        // Arrow
-//        return Arrow.create(declarationPoint, new Point(elementPosition.x + elementXOffset, elementPosition.y - verticalScrollOffset));
-//        return Arrow.create(declarationPoint, new Point(elementPosition.x + FIXED_X_OFFSET, elementPosition.y - verticalScrollOffset));
-
-//        Bezier curve
-//        final int lineEndOffset = DocumentUtil.getLineEndOffset(element.getTextOffset(), editor.getDocument());
-//        final int lineStartOffset = lineEndOffset - DocumentUtil.getLineStartOffset(element.getTextOffset(), editor.getDocument());
-//        final Point2D point2D = editor.visualPositionToXY(new VisualPosition(1, lineStartOffset));
-        return new BezierCurve(declarationPoint, new Point((int) elementPosition.getX() + FIXED_X_OFFSET, elementPosition.y - verticalScrollOffset));
     }
 
     @Override
