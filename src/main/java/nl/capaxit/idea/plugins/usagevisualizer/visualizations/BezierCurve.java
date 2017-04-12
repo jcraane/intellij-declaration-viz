@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.geom.QuadCurve2D;
 
 /**
- * todo provide a better endX position so that the curve points more towards the beginning of the line instead of a fixed offset.
  * <p>
  * Created by jamiecraane on 06/04/2017.
  */
