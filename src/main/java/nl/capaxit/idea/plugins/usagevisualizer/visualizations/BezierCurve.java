@@ -11,7 +11,6 @@ import java.awt.geom.QuadCurve2D;
 public class BezierCurve implements UsageVisualization {
     private static final int Y_OFFSET = 10;
     private static final int START_X = 100;
-    public static final int X_OFFSET = 30;
     private final Point start, end;
 
     /**
@@ -44,32 +43,32 @@ public class BezierCurve implements UsageVisualization {
         } else {
             ctrlY = endY + Math.abs(endY - startY) / 2;
         }
-//        int ctrlX = START_X - X_OFFSET;
-        int ctrlX = START_X - X_OFFSET;
-//        impl 1.
-//        final QuadCurve2D.Float curve = new QuadCurve2D.Float(START_X, startY, ctrlX, ctrlY, START_X, endY);
-//        impl 3.
+        int ctrlX = START_X;
         final QuadCurve2D.Float curve = new QuadCurve2D.Float(start.x, startY, ctrlX, ctrlY, end.x, endY);
         graphics.draw(curve);
 
-        drawArrowTip(graphics, endY, ctrlY);
+//        subdivide the quadtree to get the middle point which is used to determine the angle of the arrow-tip
+        final QuadCurve2D.Float left = new QuadCurve2D.Float(start.x, startY, ctrlX, ctrlY, end.x, endY);
+        final QuadCurve2D.Float right = new QuadCurve2D.Float(start.x, startY, ctrlX, ctrlY, end.x, endY);
+        curve.subdivide(left, right);
+        drawArrowTip(graphics, (int) left.getX2(), (int) left.getY2(), (int) right.getX2(), (int) right.getY2());
     }
 
-    private void drawArrowTip(final Graphics2D graphics, final int endY, final int ctrlY) {
-        final int dx = START_X - (START_X - X_OFFSET), dy = endY - ctrlY;
-        double D = Math.sqrt(dx * dx + dy * dy);
+    private void drawArrowTip(final Graphics2D graphics, final int startX, final int startY, final int endX, final int endY) {
+        final int dx = endX - startX, dy = endY - startY;
+        double D = Math.sqrt(dx*dx + dy*dy);
         double xm = D - 10, xn = xm, ym = 5, yn = -5, x;
-        double sin = dy / D, cos = dx / D;
+        double sin = dy/D, cos = dx/D;
 
-        x = xm * cos - ym * sin + START_X - X_OFFSET;
-        ym = xm * sin + ym * cos + ctrlY;
+        x = xm*cos - ym*sin + startX;
+        ym = xm*sin + ym*cos + startY;
         xm = x;
 
-        x = xn * cos - yn * sin + START_X - X_OFFSET;
-        yn = xn * sin + yn * cos + ctrlY;
+        x = xn*cos - yn*sin + startX;
+        yn = xn*sin + yn*cos + startY;
         xn = x;
 
-        final int[] xpoints = {START_X, (int) xm, (int) xn};
+        final int[] xpoints = {endX, (int) xm, (int) xn};
         final int[] ypoints = {endY, (int) ym, (int) yn};
         graphics.fillPolygon(xpoints, ypoints, 3);
     }
