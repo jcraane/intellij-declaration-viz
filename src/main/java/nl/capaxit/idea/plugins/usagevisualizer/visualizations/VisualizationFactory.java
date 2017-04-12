@@ -16,13 +16,9 @@ public final class VisualizationFactory {
         final Point elementPosition = editor.visualPositionToXY(editor.offsetToVisualPosition(element.getTextOffset()));
 
         // Arrow
-//        return Arrow.create(declarationPoint, new Point(elementPosition.x + elementXOffset, elementPosition.y - verticalScrollOffset));
-//        return Arrow.create(declarationPoint, new Point(elementPosition.x + FIXED_X_OFFSET, elementPosition.y - verticalScrollOffset));
+//        return Arrow.create(declarationPoint, new Point(elementPosition.x + fixedXOffset, elementPosition.y - verticalScrollOffset));
 
 //        Bezier curve
-//        final int lineEndOffset = DocumentUtil.getLineEndOffset(element.getTextOffset(), editor.getDocument());
-//        final int lineStartOffset = lineEndOffset - DocumentUtil.getLineStartOffset(element.getTextOffset(), editor.getDocument());
-//        final Point2D point2D = editor.visualPositionToXY(new VisualPosition(1, lineStartOffset));
         return new BezierCurve(declarationPoint, new Point((int) elementPosition.getX() + fixedXOffset, elementPosition.y - verticalScrollOffset));
     }
 }

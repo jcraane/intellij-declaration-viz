@@ -7,7 +7,7 @@ import java.awt.geom.QuadCurve2D;
  * <p>
  * Created by jamiecraane on 06/04/2017.
  */
-public class BezierCurve implements UsageVisualization {
+public class BezierCurve extends BaseVisualization {
     private static final int Y_OFFSET = 10;
     private static final int START_X = 100;
     private final Point start, end;
@@ -53,6 +53,7 @@ public class BezierCurve implements UsageVisualization {
         drawArrowTip(graphics, (int) left.getX2(), (int) left.getY2(), (int) right.getX2(), (int) right.getY2());
     }
 
+/*
     private void drawArrowTip(final Graphics2D graphics, final int startX, final int startY, final int endX, final int endY) {
         final int dx = endX - startX, dy = endY - startY;
         double D = Math.sqrt(dx*dx + dy*dy);
@@ -71,4 +72,5 @@ public class BezierCurve implements UsageVisualization {
         final int[] ypoints = {endY, (int) ym, (int) yn};
         graphics.fillPolygon(xpoints, ypoints, 3);
     }
+*/
 }

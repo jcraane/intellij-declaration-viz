@@ -5,7 +5,7 @@ import java.awt.*;
 /**
  * Created by jamiecraane on 23/03/2017.
  */
-public final class Arrow implements UsageVisualization {
+public final class Arrow extends BaseVisualization {
     private static final int Y_OFFSET = 17;
     private final Point start, end;
 
@@ -39,22 +39,6 @@ public final class Arrow implements UsageVisualization {
             endY += Y_OFFSET;
         }
         graphics.drawLine(start.x, startY, end.x - 2, endY - 2);
-
-        final int dx = end.x - start.x, dy = endY - startY;
-        double D = Math.sqrt(dx*dx + dy*dy);
-        double xm = D - 10, xn = xm, ym = 5, yn = -5, x;
-        double sin = dy/D, cos = dx/D;
-
-        x = xm*cos - ym*sin + start.x;
-        ym = xm*sin + ym*cos + startY;
-        xm = x;
-
-        x = xn*cos - yn*sin + start.x;
-        yn = xn*sin + yn*cos + startY;
-        xn = x;
-
-        final int[] xpoints = {end.x, (int) xm, (int) xn};
-        final int[] ypoints = {endY, (int) ym, (int) yn};
-        graphics.fillPolygon(xpoints, ypoints, 3);
+        drawArrowTip(graphics, start.x, startY, end.x, endY);
     }
 }
