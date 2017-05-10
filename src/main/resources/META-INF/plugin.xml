@@ -3,7 +3,7 @@
     <name>UsageVisualizer</name>
     <version>1.0</version>
     <vendor email="jcraane@gmail.com" url="http://www.capaxit.nl">Capax IT</vendor>
-    <idea-version since-build="145.1" until-build="171.*"/>
+    <idea-version since-build="145.1" until-build="172.*"/>
 
     <description><![CDATA[
         <h4>Usage Visualizer Plugin</h4>
