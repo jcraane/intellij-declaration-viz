@@ -65,10 +65,11 @@ public final class Arrow extends BaseVisualization {
 
     private void drawIdentifier(final Graphics2D graphics, final int startY, final int endY, final int count) {
         final double distance = Math.sqrt(Math.pow((double) end.x - 2 - (double) start.x, 2) + Math.pow((double) endY - 2 - (double) startY, 2));
-        final double rtCircle = 65 / distance;
+        final double rtCircle = 50 / distance;
         final double idX, idY;
-        idX = (1 - rtCircle) * start.x + rtCircle * end.x;
-        idY = (1 - rtCircle) * startY + rtCircle * endY;
+//        3 and 1.5 should be calculated from the size of the text.
+        idX = (1 - rtCircle) * start.x + rtCircle * end.x + (CIRCLE_SIZE / 3);
+        idY = (1 - rtCircle) * startY + rtCircle * endY + (CIRCLE_SIZE / 1.5);
         graphics.setColor(new Color(0, 0, 141, 255));
         graphics.drawString(String.valueOf(count), (float) idX, (float) idY);
     }
