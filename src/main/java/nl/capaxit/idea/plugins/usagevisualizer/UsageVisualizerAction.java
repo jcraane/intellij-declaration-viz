@@ -15,6 +15,7 @@ import nl.capaxit.idea.plugins.usagevisualizer.visualizations.VisualizationFacto
 import javax.swing.*;
 import java.awt.*;
 import java.util.Collection;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 /**
@@ -64,8 +65,11 @@ public class UsageVisualizerAction extends AnAction {
                 .map(reference -> VisualizationFactory.create(editor, verticalScrollOffset, declarationPoint, reference, FIXED_X_OFFSET))
                 .collect(Collectors.toList());
 
+        final AtomicInteger counter = new AtomicInteger(1);
         SwingUtilities.invokeLater(() -> visualizations
-                .forEach(line -> line.draw((Graphics2D) editor.getComponent().getGraphics())));
+                .forEach(line -> {
+                    line.draw((Graphics2D) editor.getComponent().getGraphics(), counter.getAndIncrement());
+                }));
     }
 
     @Override

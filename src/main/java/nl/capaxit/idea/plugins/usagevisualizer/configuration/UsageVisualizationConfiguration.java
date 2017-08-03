@@ -36,7 +36,7 @@ public class UsageVisualizationConfiguration extends BaseConfigurable {
         final VerticalBox root = new VerticalBox();
         final HorizontalBox lineTypeHolder = new HorizontalBox();
         lineTypeHolder.add(new JLabel("Line type"));
-        lineTypeHolder.add(new JComboBox<>(new String[]{"Straight line", "Bezier curve"}));
+        lineTypeHolder.add(new JComboBox<>(new String[]{Config.VISUALIZATION_LINE, Config.VISUALIZATION_BEZIER_CURVE}));
         root.add(lineTypeHolder);
 
         final HorizontalBox colorHolder = new HorizontalBox();
