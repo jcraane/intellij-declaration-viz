@@ -40,16 +40,11 @@ public final class Arrow extends BaseVisualization {
         } else {
             endY += Y_OFFSET;
         }
+
         graphics.drawLine(start.x, startY, end.x - 2, endY - 2);
         drawArrowTip(graphics, start.x, startY, end.x, endY);
-
-        // todo uitlijning klopt nog niet helemaal
         drawCircle(graphics, startY, endY);
         drawIdentifier(graphics, startY, endY, identifier);
-
-//        graphics.setColor(new Color(0, 0, 141, 255));
-//        graphics.drawString("1", (float) circleX, (float) circleY);
-//        todo draw number in circle, then continue from a to z.
     }
 
     private void drawCircle(final Graphics2D graphics, final int startY, final int endY) {
