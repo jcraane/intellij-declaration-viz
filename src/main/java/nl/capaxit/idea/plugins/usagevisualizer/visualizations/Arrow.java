@@ -28,7 +28,7 @@ public final class Arrow extends BaseVisualization {
     }
 
     @Override
-    public void draw(final Graphics2D graphics, final int count) {
+    public void draw(final Graphics2D graphics, final char identifier) {
         graphics.setColor(new Color(131, 142, 255, 128));
         graphics.setStroke(new BasicStroke(2));
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -45,7 +45,7 @@ public final class Arrow extends BaseVisualization {
 
         // todo uitlijning klopt nog niet helemaal
         drawCircle(graphics, startY, endY);
-        drawIdentifier(graphics, startY, endY, count);
+        drawIdentifier(graphics, startY, endY, identifier);
 
 //        graphics.setColor(new Color(0, 0, 141, 255));
 //        graphics.drawString("1", (float) circleX, (float) circleY);
@@ -63,7 +63,7 @@ public final class Arrow extends BaseVisualization {
         graphics.fill(circle);
     }
 
-    private void drawIdentifier(final Graphics2D graphics, final int startY, final int endY, final int count) {
+    private void drawIdentifier(final Graphics2D graphics, final int startY, final int endY, final char identifier) {
         final double distance = Math.sqrt(Math.pow((double) end.x - 2 - (double) start.x, 2) + Math.pow((double) endY - 2 - (double) startY, 2));
         final double rtCircle = 50 / distance;
         final double idX, idY;
@@ -71,6 +71,6 @@ public final class Arrow extends BaseVisualization {
         idX = (1 - rtCircle) * start.x + rtCircle * end.x + (CIRCLE_SIZE / 3);
         idY = (1 - rtCircle) * startY + rtCircle * endY + (CIRCLE_SIZE / 1.5);
         graphics.setColor(new Color(0, 0, 141, 255));
-        graphics.drawString(String.valueOf(count), (float) idX, (float) idY);
+        graphics.drawString(String.valueOf(identifier), (float) idX, (float) idY);
     }
 }

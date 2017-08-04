@@ -22,7 +22,7 @@ public class BezierCurve extends BaseVisualization {
     }
 
     @Override
-    public void draw(final Graphics2D graphics, final int i) {
+    public void draw(final Graphics2D graphics, final char identifier) {
         graphics.setColor(new Color(131, 142, 255, 128));
         graphics.setStroke(new BasicStroke(2));
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);

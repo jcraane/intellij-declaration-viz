@@ -25,6 +25,8 @@ import java.util.stream.Collectors;
  * Created by jamiecraane on 25/10/2016.
  */
 public class UsageVisualizerAction extends AnAction {
+    private static final char[] IDENTIFIERS = {'1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f',
+            'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
     // todo there must be a better way to determine this offset.
     public static final int FIXED_X_OFFSET = 75;
 
@@ -65,10 +67,10 @@ public class UsageVisualizerAction extends AnAction {
                 .map(reference -> VisualizationFactory.create(editor, verticalScrollOffset, declarationPoint, reference, FIXED_X_OFFSET))
                 .collect(Collectors.toList());
 
-        final AtomicInteger counter = new AtomicInteger(1);
+        final AtomicInteger identifierIndex = new AtomicInteger(0);
         SwingUtilities.invokeLater(() -> visualizations
                 .forEach(line -> {
-                    line.draw((Graphics2D) editor.getComponent().getGraphics(), counter.getAndIncrement());
+                    line.draw((Graphics2D) editor.getComponent().getGraphics(), IDENTIFIERS[identifierIndex.getAndIncrement()]);
                 }));
     }
 
