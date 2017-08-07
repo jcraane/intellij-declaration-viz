@@ -29,4 +29,8 @@
     <extensions defaultExtensionNs="com.intellij">
         <applicationConfigurable instance="nl.capaxit.idea.plugins.usagevisualizer.configuration.UsageVisualizationConfiguration"/>
     </extensions>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <projectService serviceInterface="nl.capaxit.idea.plugins.usagevisualizer.configuration.UsageVisualizationConfig" serviceImplementation="nl.capaxit.idea.plugins.usagevisualizer.configuration.UsageVisualizationConfig"/>
+    </extensions>
 </idea-plugin>
