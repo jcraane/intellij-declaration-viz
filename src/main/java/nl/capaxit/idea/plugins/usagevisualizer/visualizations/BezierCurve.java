@@ -16,14 +16,15 @@ public class BezierCurve extends BaseVisualization {
      * @param start start of the line. The bezier curve must find the y pos based on this point.
      * @param end   end of the line. The bezier curve must find the y pos based on this point.
      */
-    public BezierCurve(final Point start, final Point end) {
+    public BezierCurve(final Point start, final Point end, final String lineColor) {
+        super(lineColor);
         this.start = start;
         this.end = end;
     }
 
     @Override
     public void draw(final Graphics2D graphics, final int index) {
-        graphics.setColor(new Color(131, 142, 255, 128));
+        graphics.setColor(lineColor);
         graphics.setStroke(new BasicStroke(2));
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 

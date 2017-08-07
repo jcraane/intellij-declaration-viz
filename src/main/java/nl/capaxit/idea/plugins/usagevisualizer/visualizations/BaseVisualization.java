@@ -9,6 +9,13 @@ public abstract class BaseVisualization implements UsageVisualization {
     protected static final char[] IDENTIFIERS = {'1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f',
             'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
 
+    protected final Color lineColor;
+
+    protected BaseVisualization(final String lineColor) {
+        final Color color = Color.decode("#" + lineColor);
+        this.lineColor = new Color(color.getRed(), color.getGreen(), color.getBlue(), 128);
+    }
+
     protected final void drawArrowTip(final Graphics2D graphics, final int startX, final int startY, final int endX, final int endY) {
         final int dx = endX - startX, dy = endY - startY;
         double D = Math.sqrt(dx * dx + dy * dy);

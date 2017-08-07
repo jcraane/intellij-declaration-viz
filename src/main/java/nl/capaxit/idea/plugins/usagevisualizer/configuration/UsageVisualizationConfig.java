@@ -7,6 +7,8 @@ import com.intellij.openapi.components.Storage;
 import com.intellij.util.xmlb.XmlSerializerUtil;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Objects;
+
 /**
  * Created by jamiecraane on 11/05/2017.
  */
@@ -19,10 +21,15 @@ import org.jetbrains.annotations.Nullable;
 public class UsageVisualizationConfig implements PersistentStateComponent<UsageVisualizationConfig> {
     public static final String VISUALIZATION_LINE = "straight_line";
     public static final String VISUALIZATION_BEZIER_CURVE = "bezier_curve";
-    public static final String DEFAULT_COLOR = "838EFF";
+    private static final String DEFAULT_COLOR = "838EFF";
 
     private String visualiztionType = VISUALIZATION_LINE;
     private String lineColor = DEFAULT_COLOR;
+
+    public UsageVisualizationConfig() {
+        visualiztionType = VISUALIZATION_LINE;
+        lineColor = DEFAULT_COLOR;
+    }
 
     @Nullable
     @Override
@@ -54,6 +61,20 @@ public class UsageVisualizationConfig implements PersistentStateComponent<UsageV
 
     public void setLineColor(final String lineColor) {
         this.lineColor = lineColor;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final UsageVisualizationConfig that = (UsageVisualizationConfig) o;
+        return Objects.equals(visualiztionType, that.visualiztionType) &&
+                Objects.equals(lineColor, that.lineColor);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(visualiztionType, lineColor);
     }
 
     @Override

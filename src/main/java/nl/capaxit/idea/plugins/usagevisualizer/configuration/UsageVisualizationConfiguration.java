@@ -20,6 +20,8 @@ import java.awt.*;
 public class UsageVisualizationConfiguration extends BaseConfigurable {
     private JPanel settingsUi;
     private UsageVisualizationConfig config;
+    private ComboBox<String> lineTypeComboBox;
+    private ColorPicker colorPicker;
 
     @Nls
     @Override
@@ -37,17 +39,23 @@ public class UsageVisualizationConfiguration extends BaseConfigurable {
     @Override
     public JComponent createComponent() {
         config = UsageVisualizationConfig.getInstance();
+        if (config == null) {
+            config = new UsageVisualizationConfig();
+        }
         settingsUi = new JPanel();
         final VerticalBox root = new VerticalBox();
         final HorizontalBox lineTypeHolder = new HorizontalBox();
         lineTypeHolder.add(new JLabel("Line type"));
-        lineTypeHolder.add(new ComboBox<>(new String[]{UsageVisualizationConfig.VISUALIZATION_LINE, UsageVisualizationConfig.VISUALIZATION_BEZIER_CURVE}));
+        lineTypeComboBox = new ComboBox<>(new String[]{UsageVisualizationConfig.VISUALIZATION_LINE, UsageVisualizationConfig.VISUALIZATION_BEZIER_CURVE});
+        lineTypeComboBox.setSelectedItem(config.getVisualiztionType());
+        lineTypeHolder.add(lineTypeComboBox);
         root.add(lineTypeHolder);
 
         final HorizontalBox colorHolder = new HorizontalBox();
         colorHolder.add(new JLabel("Line color"));
-        colorHolder.add(new ColorPicker(() -> {
-        }, new Color(100, 100, 100), true));
+        colorPicker = new ColorPicker(() -> {
+        }, Color.decode("#" + config.getLineColor()), true);
+        colorHolder.add(colorPicker);
         root.add(colorHolder);
 
         settingsUi.add(root);
@@ -56,17 +64,21 @@ public class UsageVisualizationConfiguration extends BaseConfigurable {
 
     @Override
     public void apply() throws ConfigurationException {
-//        todo implement
+        config.setVisualiztionType((String) lineTypeComboBox.getSelectedItem());
+        config.setLineColor(Integer.toHexString(colorPicker.getColor().getRGB()).substring(2));
     }
 
     @Override
     public void reset() {
-//        todo implement
+        lineTypeComboBox.setSelectedItem(config.getVisualiztionType());
+        Color.decode("#" + config.getLineColor());
     }
 
     @Override
     public boolean isModified() {
-//        todo implement
-        return true;
+        boolean modified = false;
+        modified |= !lineTypeComboBox.getSelectedItem().equals(config.getVisualiztionType());
+        modified |= !colorPicker.getColor().equals(Color.decode("#" + config.getLineColor()));
+        return modified;
     }
 }

@@ -13,7 +13,8 @@ public final class Arrow extends BaseVisualization {
     public static final int DISTANCE_NEW_INDEX_MULTIPLIER = 8;
     private final Point start, end;
 
-    private Arrow(final Point start, final Point end) {
+    private Arrow(final Point start, final Point end, final String lineColor) {
+        super(lineColor);
         if (start == null) {
             throw new IllegalArgumentException("start is required");
         }
@@ -25,13 +26,13 @@ public final class Arrow extends BaseVisualization {
         this.end = end;
     }
 
-    public static Arrow create(final Point start, final Point end) {
-        return new Arrow(start, end);
+    public static Arrow create(final Point start, final Point end, final String lineColor) {
+        return new Arrow(start, end, lineColor);
     }
 
     @Override
     public void draw(final Graphics2D graphics, final int index) {
-        graphics.setColor(new Color(131, 142, 255, 128));
+        graphics.setColor(lineColor);
         graphics.setStroke(new BasicStroke(2));
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
