@@ -8,6 +8,7 @@ import com.intellij.openapi.editor.actionSystem.EditorActionManager;
 import com.intellij.openapi.editor.actionSystem.TypedAction;
 import com.intellij.openapi.editor.actionSystem.TypedActionHandler;
 import com.intellij.openapi.fileEditor.OpenFileDescriptor;
+import com.intellij.openapi.fileEditor.ex.FileEditorManagerEx;
 import com.intellij.openapi.fileEditor.ex.IdeDocumentHistory;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
@@ -52,6 +53,11 @@ public class QuickJumpHandler implements TypedActionHandler {
             CommandProcessor.getInstance().executeCommand(project, () -> {
                 IdeDocumentHistory.getInstance(project).includeCurrentCommandAsNavigation();
                 new OpenFileDescriptor(project, currentFile.getViewProvider().getVirtualFile(), offset).navigateIn(currentEditor);
+
+                if (currentEditor.getProject() != null) {
+                    CommandProcessor.getInstance().executeCommand(currentEditor.getProject(), () -> FileEditorManagerEx.getInstanceEx(currentEditor.getProject()).updateFilePresentation(element.getContainingFile().getVirtualFile()), "", null);
+                }
+
             }, "", null);
             return true;
         }
