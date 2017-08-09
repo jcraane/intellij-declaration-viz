@@ -25,6 +25,7 @@ public class UsageVisualizationConfig implements PersistentStateComponent<UsageV
 
     private String visualiztionType = VISUALIZATION_LINE;
     private String lineColor = DEFAULT_COLOR;
+    private boolean quickJumpEnabled = true;
 
     public UsageVisualizationConfig() {
         visualiztionType = VISUALIZATION_LINE;
@@ -61,6 +62,14 @@ public class UsageVisualizationConfig implements PersistentStateComponent<UsageV
 
     public void setLineColor(final String lineColor) {
         this.lineColor = lineColor;
+    }
+
+    public boolean isQuickJumpEnabled() {
+        return quickJumpEnabled;
+    }
+
+    public void setQuickJumpEnabled(final boolean quickJumpEnabled) {
+        this.quickJumpEnabled = quickJumpEnabled;
     }
 
     @Override

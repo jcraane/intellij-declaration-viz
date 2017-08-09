@@ -12,6 +12,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiReference;
 import com.intellij.psi.search.searches.ReferencesSearch;
+import nl.capaxit.idea.plugins.usagevisualizer.configuration.UsageVisualizationConfig;
 import nl.capaxit.idea.plugins.usagevisualizer.visualizations.BaseVisualization;
 import nl.capaxit.idea.plugins.usagevisualizer.visualizations.QuickJumpHandler;
 import nl.capaxit.idea.plugins.usagevisualizer.visualizations.UsageVisualization;
@@ -50,11 +51,15 @@ public class UsageVisualizerAction extends AnAction {
 
         final PsiElement targetElement = TargetElementUtil.findTargetElement(editor, TargetElementUtil.getInstance().getReferenceSearchFlags());
         if (targetElement != null) {
-            findAndDrawUsagesLines(editor, targetElement);
+            UsageVisualizationConfig config = UsageVisualizationConfig.getInstance();
+            if (config == null) {
+                config = new UsageVisualizationConfig();
+            }
+            findAndDrawUsagesLines(editor, targetElement, config);
         }
     }
 
-    private void findAndDrawUsagesLines(final Editor editor, final PsiElement declaration) {
+    private void findAndDrawUsagesLines(final Editor editor, final PsiElement declaration, final UsageVisualizationConfig config) {
         final int verticalScrollOffset = editor.getScrollingModel().getVerticalScrollOffset();
         final Point declarationPosition = editor.visualPositionToXY(editor.offsetToVisualPosition(declaration.getTextOffset()));
         final Point declarationPoint = new Point(declarationPosition.x + FIXED_X_OFFSET, declarationPosition.y - verticalScrollOffset);
@@ -63,14 +68,17 @@ public class UsageVisualizerAction extends AnAction {
         final java.util.List<UsageVisualization> visualizations = references.stream()
                 .map(reference -> VisualizationFactory.create(editor, verticalScrollOffset, declarationPoint, reference, FIXED_X_OFFSET))
                 .collect(Collectors.toList());
-        setupQuickJumpIfEnabled(references);
+
+        if (config.isQuickJumpEnabled()) {
+            setupQuickJump(references);
+        }
 
         final AtomicInteger identifierIndex = new AtomicInteger(0);
         SwingUtilities.invokeLater(() -> visualizations
                 .forEach(line -> line.draw((Graphics2D) editor.getComponent().getGraphics(), identifierIndex.getAndIncrement())));
     }
 
-    private void setupQuickJumpIfEnabled(final List<PsiReference> references) {
+    private void setupQuickJump(final List<PsiReference> references) {
         final HashMap<Character, PsiReference> characterPsiReferenceMap = new HashMap<>();
         for (int i = 0; i < references.size(); i++) {
             characterPsiReferenceMap.put(BaseVisualization.IDENTIFIERS[i], references.get(i));

@@ -10,8 +10,10 @@ public abstract class BaseVisualization implements UsageVisualization {
             'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
 
     protected final Color lineColor;
+    protected final boolean isQuickJumpEnabled;
 
-    protected BaseVisualization(final String lineColor) {
+    protected BaseVisualization(final String lineColor, final boolean isQuickJumpEnabled) {
+        this.isQuickJumpEnabled = isQuickJumpEnabled;
         final Color color = Color.decode("#" + lineColor);
         this.lineColor = new Color(color.getRed(), color.getGreen(), color.getBlue(), 128);
     }

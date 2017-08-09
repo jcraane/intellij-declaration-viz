@@ -21,8 +21,8 @@ public class BezierCurve extends BaseVisualization {
      * @param start start of the line. The bezier curve must find the y pos based on this point.
      * @param end   end of the line. The bezier curve must find the y pos based on this point.
      */
-    public BezierCurve(final Point start, final Point end, final String lineColor) {
-        super(lineColor);
+    public BezierCurve(final Point start, final Point end, final String lineColor, final boolean isQuickJumpEnabled) {
+        super(lineColor, isQuickJumpEnabled);
         this.start = start;
         this.end = end;
     }
@@ -58,7 +58,9 @@ public class BezierCurve extends BaseVisualization {
         curve.subdivide(left, right);
         drawArrowTip(graphics, (int) left.getX2(), (int) left.getY2(), (int) right.getX2(), (int) right.getY2());
 
-        drawIdentifier(graphics, left, index);
+        if (isQuickJumpEnabled) {
+            drawIdentifier(graphics, left, index);
+        }
     }
 
     private void drawIdentifier(final Graphics2D graphics, final QuadCurve2D.Float first, final int index) {

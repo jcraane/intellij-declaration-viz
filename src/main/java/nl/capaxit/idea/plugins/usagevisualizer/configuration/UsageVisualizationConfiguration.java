@@ -22,6 +22,7 @@ public class UsageVisualizationConfiguration extends BaseConfigurable {
     private UsageVisualizationConfig config;
     private ComboBox<String> lineTypeComboBox;
     private ColorPicker colorPicker;
+    private JCheckBox enableQuickJump;
 
     @Nls
     @Override
@@ -51,6 +52,13 @@ public class UsageVisualizationConfiguration extends BaseConfigurable {
         lineTypeHolder.add(lineTypeComboBox);
         root.add(lineTypeHolder);
 
+        final HorizontalBox quickJumpHolder = new HorizontalBox();
+        quickJumpHolder.add(new JLabel("Enable Quick Jump"));
+        enableQuickJump = new JCheckBox();
+        enableQuickJump.setSelected(config.isQuickJumpEnabled());
+        quickJumpHolder.add(enableQuickJump);
+        root.add(quickJumpHolder);
+
         final HorizontalBox colorHolder = new HorizontalBox();
         colorHolder.add(new JLabel("Line color"));
         colorPicker = new ColorPicker(() -> {
@@ -66,12 +74,14 @@ public class UsageVisualizationConfiguration extends BaseConfigurable {
     public void apply() throws ConfigurationException {
         config.setVisualiztionType((String) lineTypeComboBox.getSelectedItem());
         config.setLineColor(Integer.toHexString(colorPicker.getColor().getRGB()).substring(2));
+        config.setQuickJumpEnabled(enableQuickJump.isSelected());
     }
 
     @Override
     public void reset() {
         lineTypeComboBox.setSelectedItem(config.getVisualiztionType());
         Color.decode("#" + config.getLineColor());
+        enableQuickJump.setSelected(config.isQuickJumpEnabled());
     }
 
     @Override
@@ -79,6 +89,7 @@ public class UsageVisualizationConfiguration extends BaseConfigurable {
         boolean modified = false;
         modified |= !lineTypeComboBox.getSelectedItem().equals(config.getVisualiztionType());
         modified |= !colorPicker.getColor().equals(Color.decode("#" + config.getLineColor()));
+        modified |= !enableQuickJump.isSelected() == config.isQuickJumpEnabled();
         return modified;
     }
 }

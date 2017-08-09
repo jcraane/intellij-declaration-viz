@@ -13,8 +13,8 @@ public final class Arrow extends BaseVisualization {
     public static final int DISTANCE_NEW_INDEX_MULTIPLIER = 8;
     private final Point start, end;
 
-    private Arrow(final Point start, final Point end, final String lineColor) {
-        super(lineColor);
+    private Arrow(final Point start, final Point end, final String lineColor, final boolean isQuickJumpEnabled) {
+        super(lineColor, isQuickJumpEnabled);
         if (start == null) {
             throw new IllegalArgumentException("start is required");
         }
@@ -26,8 +26,8 @@ public final class Arrow extends BaseVisualization {
         this.end = end;
     }
 
-    public static Arrow create(final Point start, final Point end, final String lineColor) {
-        return new Arrow(start, end, lineColor);
+    public static Arrow create(final Point start, final Point end, final String lineColor, final boolean isQuickJumpEnabled) {
+        return new Arrow(start, end, lineColor, isQuickJumpEnabled);
     }
 
     @Override
@@ -46,8 +46,10 @@ public final class Arrow extends BaseVisualization {
 
         graphics.drawLine(start.x, startY, end.x - 2, endY - 2);
         drawArrowTip(graphics, start.x, startY, end.x, endY);
-        drawCircle(graphics, startY, endY, index);
-        drawIdentifier(graphics, startY, endY, index);
+        if (isQuickJumpEnabled) {
+            drawCircle(graphics, startY, endY, index);
+            drawIdentifier(graphics, startY, endY, index);
+        }
     }
 
     private void drawCircle(final Graphics2D graphics, final int startY, final int endY, final int index) {
