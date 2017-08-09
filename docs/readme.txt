@@ -8,3 +8,4 @@ https://intellij-support.jetbrains.com/hc/en-us/community/posts/206394699-Draw-s
 settings
 http://corochann.com/intellij-plugin-development-introduction-applicationconfigurable-projectconfigurable-873.html
 http://corochann.com/intellij-plugin-development-introduction-persiststatecomponent-903.html
+http://www.jetbrains.org/intellij/sdk/docs/basics/persisting_state_of_components.html

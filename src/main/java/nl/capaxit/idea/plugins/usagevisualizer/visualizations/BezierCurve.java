@@ -1,6 +1,7 @@
 package nl.capaxit.idea.plugins.usagevisualizer.visualizations;
 
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.QuadCurve2D;
 
 /**
@@ -11,6 +12,10 @@ public class BezierCurve extends BaseVisualization {
     private static final int Y_OFFSET = 10;
     private static final int START_X = 100;
     private final Point start, end;
+
+    private static final int CIRCLE_SIZE = 18;
+    public static final int BASE_DISTANCE = 40;
+    public static final int DISTANCE_NEW_INDEX_MULTIPLIER = 8;
 
     /**
      * @param start start of the line. The bezier curve must find the y pos based on this point.
@@ -47,31 +52,24 @@ public class BezierCurve extends BaseVisualization {
         final QuadCurve2D.Float curve = new QuadCurve2D.Float(start.x, startY, ctrlX, ctrlY, end.x, endY);
         graphics.draw(curve);
 
-//        subdivide the quadtree to get the middle point which is used to determine the angle of the arrow-tip
+//        subdivide the quadcurve to get the middle point which is used to determine the angle of the arrow-tip
         final QuadCurve2D.Float left = new QuadCurve2D.Float(start.x, startY, ctrlX, ctrlY, end.x, endY);
         final QuadCurve2D.Float right = new QuadCurve2D.Float(start.x, startY, ctrlX, ctrlY, end.x, endY);
         curve.subdivide(left, right);
         drawArrowTip(graphics, (int) left.getX2(), (int) left.getY2(), (int) right.getX2(), (int) right.getY2());
+
+        drawIdentifier(graphics, left, index);
     }
 
-/*
-    private void drawArrowTip(final Graphics2D graphics, final int startX, final int startY, final int endX, final int endY) {
-        final int dx = endX - startX, dy = endY - startY;
-        double D = Math.sqrt(dx*dx + dy*dy);
-        double xm = D - 10, xn = xm, ym = 5, yn = -5, x;
-        double sin = dy/D, cos = dx/D;
+    private void drawIdentifier(final Graphics2D graphics, final QuadCurve2D.Float first, final int index) {
+        final QuadCurve2D.Float left = new QuadCurve2D.Float(0, 0, 0, 0, 0, 0);
+        final QuadCurve2D.Float right = new QuadCurve2D.Float(0, 0, 0, 0, 0, 0);
+        first.subdivide(left, right);
 
-        x = xm*cos - ym*sin + startX;
-        ym = xm*sin + ym*cos + startY;
-        xm = x;
-
-        x = xn*cos - yn*sin + startX;
-        yn = xn*sin + yn*cos + startY;
-        xn = x;
-
-        final int[] xpoints = {endX, (int) xm, (int) xn};
-        final int[] ypoints = {endY, (int) ym, (int) yn};
-        graphics.fillPolygon(xpoints, ypoints, 3);
+        final Ellipse2D.Double circle = new Ellipse2D.Double((int) left.x2 - (CIRCLE_SIZE / 2), (int) left.y2 - (CIRCLE_SIZE / 2), CIRCLE_SIZE, CIRCLE_SIZE);
+        graphics.setColor(new Color(27, 198, 141, 255));
+        graphics.fill(circle);
+        graphics.setColor(new Color(0, 0, 141, 255));
+        graphics.drawString(String.valueOf(IDENTIFIERS[index]), left.x2 - (CIRCLE_SIZE / 3), (float) (left.y2 + (CIRCLE_SIZE / 3)));
     }
-*/
 }

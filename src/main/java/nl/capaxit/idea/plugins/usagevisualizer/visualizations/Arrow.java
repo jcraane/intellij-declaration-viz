@@ -50,11 +50,9 @@ public final class Arrow extends BaseVisualization {
         drawIdentifier(graphics, startY, endY, index);
     }
 
-//    todo dynamische offset werkt nog niet
     private void drawCircle(final Graphics2D graphics, final int startY, final int endY, final int index) {
         final double distance = Math.sqrt(Math.pow((double) end.x - 2 - (double) start.x, 2) + Math.pow((double) endY - 2 - (double) startY, 2));
         final double rtCircle =  (BASE_DISTANCE + ((index + 1) * DISTANCE_NEW_INDEX_MULTIPLIER)) / distance;
-//        final double rtCircle =  (BASE_DISTANCE + index) / distance;
         final double circleX, circleY;
         circleX = (1 - rtCircle) * start.x + rtCircle * end.x;
         circleY = (1 - rtCircle) * startY + rtCircle * endY;
@@ -66,7 +64,6 @@ public final class Arrow extends BaseVisualization {
     private void drawIdentifier(final Graphics2D graphics, final int startY, final int endY, final int index) {
         final double distance = Math.sqrt(Math.pow((double) end.x - 2 - (double) start.x, 2) + Math.pow((double) endY - 2 - (double) startY, 2));
         final double rtCircle = (BASE_DISTANCE + ((index + 1) * DISTANCE_NEW_INDEX_MULTIPLIER)) / distance;
-//        final double rtCircle = (BASE_DISTANCE) / distance;
         final double idX, idY;
 //        3 and 1.5 should be calculated from the size of the text.
         idX = (1 - rtCircle) * start.x + rtCircle * end.x + (CIRCLE_SIZE / 3);

@@ -11,7 +11,6 @@ import java.awt.*;
  * Created by jamiecraane on 10/04/2017.
  */
 public final class VisualizationFactory {
-    //    todo factore should determine based on settings which visualization to create.
     public static UsageVisualization create(final Editor editor, final int verticalScrollOffset, final Point declarationPoint, final PsiReference reference, final int fixedXOffset) {
         UsageVisualizationConfig config = UsageVisualizationConfig.getInstance();
         if (config == null) {
