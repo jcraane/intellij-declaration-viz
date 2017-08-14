@@ -78,6 +78,11 @@ public class UsageVisualizationConfiguration extends BaseConfigurable {
     }
 
     @Override
+    public void disposeUIResources() {
+        settingsUi = null;
+    }
+
+    @Override
     public void apply() throws ConfigurationException {
         config.setVisualiztionType((String) lineTypeComboBox.getSelectedItem());
         config.setLineColor(Integer.toHexString(colorPicker.getColor().getRGB()).substring(2));
