@@ -1,14 +1,17 @@
 <idea-plugin version="2">
     <id>nl.capaxit.idea.plugins.usagevisualizer</id>
     <name>UsageVisualizer</name>
-    <version>1.0</version>
+    <version>1.0-beta1</version>
     <vendor email="jcraane@gmail.com" url="http://www.capaxit.nl">Capax IT</vendor>
     <idea-version since-build="145.1" until-build="172.*"/>
 
     <description><![CDATA[
         <h4>Usage Visualizer Plugin</h4>
         </br></br>
-        Plugin which graphically visualizes the usages of elements in a source file. Inspired by DrRacket.
+        Plugin which graphically visualizes the usages of elements in a source file. Provides identifiers for
+        each usage for quick navigation to those usages. Linewidth, color, quickjump and type of visualization
+        can be configured in the settings of plugin.
+        </br>Inspired by DrRacket.
     ]]></description>
 
     <change-notes><![CDATA[
