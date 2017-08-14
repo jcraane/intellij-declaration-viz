@@ -72,6 +72,7 @@ public class BezierCurve extends BaseVisualization {
         graphics.setColor(new Color(27, 198, 141, 255));
         graphics.fill(circle);
         graphics.setColor(new Color(0, 0, 141, 255));
-        graphics.drawString(String.valueOf(IDENTIFIERS[index]), left.x2 - (CIRCLE_SIZE / 3), (float) (left.y2 + (CIRCLE_SIZE / 3)));
+        graphics.drawString(getIdentifier(index), left.x2 - (CIRCLE_SIZE / 3), (float) (left.y2 + (CIRCLE_SIZE / 3)));
     }
+
 }

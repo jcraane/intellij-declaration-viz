@@ -36,4 +36,12 @@ public abstract class BaseVisualization implements UsageVisualization {
         final int[] ypoints = {endY, (int) ym, (int) yn};
         graphics.fillPolygon(xpoints, ypoints, 3);
     }
+
+    protected final String getIdentifier(final int index) {
+        if (index > IDENTIFIERS.length) {
+            return String.valueOf(IDENTIFIERS[IDENTIFIERS.length]);
+        }
+
+        return String.valueOf(IDENTIFIERS[index]);
+    }
 }

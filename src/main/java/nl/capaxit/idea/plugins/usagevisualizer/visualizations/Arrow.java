@@ -71,6 +71,6 @@ public final class Arrow extends BaseVisualization {
         idX = (1 - rtCircle) * start.x + rtCircle * end.x + (CIRCLE_SIZE / 3);
         idY = (1 - rtCircle) * startY + rtCircle * endY + (CIRCLE_SIZE / 1.5);
         graphics.setColor(new Color(0, 0, 141, 255));
-        graphics.drawString(String.valueOf(IDENTIFIERS[index]), (float) idX, (float) idY);
+        graphics.drawString(getIdentifier(index), (float) idX, (float) idY);
     }
 }
