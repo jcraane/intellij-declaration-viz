@@ -21,11 +21,13 @@ import java.util.Objects;
 public class UsageVisualizationConfig implements PersistentStateComponent<UsageVisualizationConfig> {
     public static final String VISUALIZATION_LINE = "straight_line";
     public static final String VISUALIZATION_BEZIER_CURVE = "bezier_curve";
+    public static final int DEFAULT_LINE_WIDTH = 2;
     private static final String DEFAULT_COLOR = "838EFF";
 
     private String visualiztionType = VISUALIZATION_LINE;
     private String lineColor = DEFAULT_COLOR;
     private boolean quickJumpEnabled = true;
+    private int lineWidth = DEFAULT_LINE_WIDTH;
 
     public UsageVisualizationConfig() {
         visualiztionType = VISUALIZATION_LINE;
@@ -70,6 +72,14 @@ public class UsageVisualizationConfig implements PersistentStateComponent<UsageV
 
     public void setQuickJumpEnabled(final boolean quickJumpEnabled) {
         this.quickJumpEnabled = quickJumpEnabled;
+    }
+
+    public int getLineWidth() {
+        return lineWidth;
+    }
+
+    public void setLineWidth(final int lineWidth) {
+        this.lineWidth = lineWidth;
     }
 
     @Override

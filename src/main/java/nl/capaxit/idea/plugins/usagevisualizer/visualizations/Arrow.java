@@ -1,5 +1,7 @@
 package nl.capaxit.idea.plugins.usagevisualizer.visualizations;
 
+import nl.capaxit.idea.plugins.usagevisualizer.configuration.UsageVisualizationConfig;
+
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 
@@ -13,8 +15,8 @@ public final class Arrow extends BaseVisualization {
     public static final int DISTANCE_NEW_INDEX_MULTIPLIER = 8;
     private final Point start, end;
 
-    private Arrow(final Point start, final Point end, final String lineColor, final boolean isQuickJumpEnabled) {
-        super(lineColor, isQuickJumpEnabled);
+    private Arrow(final Point start, final Point end, final UsageVisualizationConfig config) {
+        super(config);
         if (start == null) {
             throw new IllegalArgumentException("start is required");
         }
@@ -26,14 +28,14 @@ public final class Arrow extends BaseVisualization {
         this.end = end;
     }
 
-    public static Arrow create(final Point start, final Point end, final String lineColor, final boolean isQuickJumpEnabled) {
-        return new Arrow(start, end, lineColor, isQuickJumpEnabled);
+    public static Arrow create(final Point start, final Point end, final UsageVisualizationConfig config) {
+        return new Arrow(start, end, config);
     }
 
     @Override
     public void draw(final Graphics2D graphics, final int index) {
         graphics.setColor(lineColor);
-        graphics.setStroke(new BasicStroke(2));
+        graphics.setStroke(new BasicStroke(config.getLineWidth()));
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         int startY = start.y;
@@ -46,7 +48,7 @@ public final class Arrow extends BaseVisualization {
 
         graphics.drawLine(start.x, startY, end.x - 2, endY - 2);
         drawArrowTip(graphics, start.x, startY, end.x, endY);
-        if (isQuickJumpEnabled) {
+        if (config.isQuickJumpEnabled()) {
             drawCircle(graphics, startY, endY, index);
             drawIdentifier(graphics, startY, endY, index);
         }

@@ -23,6 +23,7 @@ public class UsageVisualizationConfiguration extends BaseConfigurable {
     private ComboBox<String> lineTypeComboBox;
     private ColorPicker colorPicker;
     private JCheckBox enableQuickJump;
+    private JSpinner lineWidth;
 
     @Nls
     @Override
@@ -59,6 +60,12 @@ public class UsageVisualizationConfiguration extends BaseConfigurable {
         quickJumpHolder.add(enableQuickJump);
         root.add(quickJumpHolder);
 
+        final HorizontalBox lineWidthHolder = new HorizontalBox();
+        lineWidthHolder.add(new JLabel("Line width"));
+        lineWidth = new JSpinner(new SpinnerNumberModel(config.getLineWidth(), 1, 5, 1));
+        lineWidthHolder.add(lineWidth);
+        root.add(lineWidthHolder);
+
         final HorizontalBox colorHolder = new HorizontalBox();
         colorHolder.add(new JLabel("Line color"));
         colorPicker = new ColorPicker(() -> {
@@ -75,6 +82,7 @@ public class UsageVisualizationConfiguration extends BaseConfigurable {
         config.setVisualiztionType((String) lineTypeComboBox.getSelectedItem());
         config.setLineColor(Integer.toHexString(colorPicker.getColor().getRGB()).substring(2));
         config.setQuickJumpEnabled(enableQuickJump.isSelected());
+        config.setLineWidth((Integer) lineWidth.getValue());
     }
 
     @Override
@@ -82,6 +90,7 @@ public class UsageVisualizationConfiguration extends BaseConfigurable {
         lineTypeComboBox.setSelectedItem(config.getVisualiztionType());
         Color.decode("#" + config.getLineColor());
         enableQuickJump.setSelected(config.isQuickJumpEnabled());
+        lineWidth.setValue(config.getLineWidth());
     }
 
     @Override
@@ -89,7 +98,8 @@ public class UsageVisualizationConfiguration extends BaseConfigurable {
         boolean modified = false;
         modified |= !lineTypeComboBox.getSelectedItem().equals(config.getVisualiztionType());
         modified |= !colorPicker.getColor().equals(Color.decode("#" + config.getLineColor()));
-        modified |= !enableQuickJump.isSelected() == config.isQuickJumpEnabled();
+        modified |= enableQuickJump.isSelected() != config.isQuickJumpEnabled();
+        modified |= !lineWidth.getValue().equals(config.getLineWidth());
         return modified;
     }
 }

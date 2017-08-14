@@ -1,5 +1,7 @@
 package nl.capaxit.idea.plugins.usagevisualizer.visualizations;
 
+import nl.capaxit.idea.plugins.usagevisualizer.configuration.UsageVisualizationConfig;
+
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.QuadCurve2D;
@@ -21,8 +23,8 @@ public class BezierCurve extends BaseVisualization {
      * @param start start of the line. The bezier curve must find the y pos based on this point.
      * @param end   end of the line. The bezier curve must find the y pos based on this point.
      */
-    public BezierCurve(final Point start, final Point end, final String lineColor, final boolean isQuickJumpEnabled) {
-        super(lineColor, isQuickJumpEnabled);
+    public BezierCurve(final Point start, final Point end, final UsageVisualizationConfig config) {
+        super(config);
         this.start = start;
         this.end = end;
     }
@@ -30,7 +32,7 @@ public class BezierCurve extends BaseVisualization {
     @Override
     public void draw(final Graphics2D graphics, final int index) {
         graphics.setColor(lineColor);
-        graphics.setStroke(new BasicStroke(2));
+        graphics.setStroke(new BasicStroke(config.getLineWidth()));
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         int startY = start.y;
@@ -58,7 +60,7 @@ public class BezierCurve extends BaseVisualization {
         curve.subdivide(left, right);
         drawArrowTip(graphics, (int) left.getX2(), (int) left.getY2(), (int) right.getX2(), (int) right.getY2());
 
-        if (isQuickJumpEnabled) {
+        if (config.isQuickJumpEnabled()) {
             drawIdentifier(graphics, left, index);
         }
     }

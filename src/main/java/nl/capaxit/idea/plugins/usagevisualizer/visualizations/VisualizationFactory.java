@@ -21,9 +21,9 @@ public final class VisualizationFactory {
         final Point elementPosition = editor.visualPositionToXY(editor.offsetToVisualPosition(element.getTextOffset()));
 
         if (config.getVisualiztionType().equals(UsageVisualizationConfig.VISUALIZATION_LINE)) {
-            return Arrow.create(declarationPoint, new Point(elementPosition.x + fixedXOffset, elementPosition.y - verticalScrollOffset), config.getLineColor(), config.isQuickJumpEnabled());
+            return Arrow.create(declarationPoint, new Point(elementPosition.x + fixedXOffset, elementPosition.y - verticalScrollOffset), config);
         } else {
-            return new BezierCurve(declarationPoint, new Point((int) elementPosition.getX() + fixedXOffset, elementPosition.y - verticalScrollOffset), config.getLineColor(), config.isQuickJumpEnabled());
+            return new BezierCurve(declarationPoint, new Point((int) elementPosition.getX() + fixedXOffset, elementPosition.y - verticalScrollOffset), config);
         }
     }
 }

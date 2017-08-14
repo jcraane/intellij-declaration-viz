@@ -1,5 +1,7 @@
 package nl.capaxit.idea.plugins.usagevisualizer.visualizations;
 
+import nl.capaxit.idea.plugins.usagevisualizer.configuration.UsageVisualizationConfig;
+
 import java.awt.*;
 
 /**
@@ -9,12 +11,12 @@ public abstract class BaseVisualization implements UsageVisualization {
     public static final char[] IDENTIFIERS = {'1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f',
             'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
 
+    protected final UsageVisualizationConfig config;
     protected final Color lineColor;
-    protected final boolean isQuickJumpEnabled;
 
-    protected BaseVisualization(final String lineColor, final boolean isQuickJumpEnabled) {
-        this.isQuickJumpEnabled = isQuickJumpEnabled;
-        final Color color = Color.decode("#" + lineColor);
+    protected BaseVisualization(final UsageVisualizationConfig config) {
+        this.config = config;
+        final Color color = Color.decode("#" + config.getLineColor());
         this.lineColor = new Color(color.getRed(), color.getGreen(), color.getBlue(), 128);
     }
 
