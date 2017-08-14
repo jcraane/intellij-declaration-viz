@@ -69,7 +69,7 @@ public class BezierCurve extends BaseVisualization {
         first.subdivide(left, right);
 
         final Ellipse2D.Double circle = new Ellipse2D.Double((int) left.x2 - (CIRCLE_SIZE / 2), (int) left.y2 - (CIRCLE_SIZE / 2), CIRCLE_SIZE, CIRCLE_SIZE);
-        graphics.setColor(lineColor);
+        graphics.setColor(getCircleColor());
         graphics.fill(circle);
         graphics.setColor(new Color(0, 0, 141, 255));
         graphics.drawString(getIdentifier(index), left.x2 - (CIRCLE_SIZE / 3), (float) (left.y2 + (CIRCLE_SIZE / 3)));

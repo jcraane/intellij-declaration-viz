@@ -61,7 +61,7 @@ public final class Arrow extends BaseVisualization {
         circleX = (1 - rtCircle) * start.x + rtCircle * end.x;
         circleY = (1 - rtCircle) * startY + rtCircle * endY;
         final Ellipse2D.Double circle = new Ellipse2D.Double(circleX, circleY, CIRCLE_SIZE, CIRCLE_SIZE);
-        graphics.setColor(lineColor);
+        graphics.setColor(getCircleColor());
         graphics.fill(circle);
     }
 

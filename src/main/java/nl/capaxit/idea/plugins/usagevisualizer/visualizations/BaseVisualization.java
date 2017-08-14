@@ -47,4 +47,8 @@ public abstract class BaseVisualization implements UsageVisualization {
 
         return String.valueOf(IDENTIFIERS[index]);
     }
+
+    protected final Color getCircleColor() {
+        return new Color(lineColor.getRed(), lineColor.getGreen(), lineColor.getBlue());
+    }
 }
