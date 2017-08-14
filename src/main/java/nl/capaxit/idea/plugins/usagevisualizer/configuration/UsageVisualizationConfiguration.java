@@ -79,6 +79,7 @@ public class UsageVisualizationConfiguration extends BaseConfigurable {
 
     @Override
     public void disposeUIResources() {
+        //noinspection AssignmentToNull
         settingsUi = null;
     }
 

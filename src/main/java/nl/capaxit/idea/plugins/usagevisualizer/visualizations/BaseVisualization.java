@@ -22,9 +22,10 @@ public abstract class BaseVisualization implements UsageVisualization {
 
     protected final void drawArrowTip(final Graphics2D graphics, final int startX, final int startY, final int endX, final int endY) {
         final int dx = endX - startX, dy = endY - startY;
-        double D = Math.sqrt(dx * dx + dy * dy);
+        final double D = Math.sqrt(dx * dx + dy * dy);
         double xm = D - 10, xn = xm, ym = 5, yn = -5, x;
-        double sin = dy / D, cos = dx / D;
+        final double sin = dy / D;
+        final double cos = dx / D;
 
         x = xm * cos - ym * sin + startX;
         ym = xm * sin + ym * cos + startY;

@@ -21,8 +21,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class QuickJumpHandler implements TypedActionHandler {
-    private TypedActionHandler previous;
-    private Map<Character, PsiReference> identifierToReferenceMap;
+    private final TypedActionHandler previous;
+    private final Map<Character, PsiReference> identifierToReferenceMap;
 
     public QuickJumpHandler(final Map<Character, PsiReference> identifierToReferenceMap, final TypedActionHandler previous) {
         this.identifierToReferenceMap = identifierToReferenceMap != null ? identifierToReferenceMap : new HashMap();
@@ -43,13 +43,13 @@ public class QuickJumpHandler implements TypedActionHandler {
         resetPreviousHandler();
     }
 
-    private static boolean navigateInCurrentEditor(@NotNull PsiElement element, @NotNull PsiFile currentFile, @NotNull Editor currentEditor) {
-        int offset = element.getTextOffset();
-        PsiElement leaf = currentFile.findElementAt(offset);
+    private static boolean navigateInCurrentEditor(@NotNull final PsiElement element, @NotNull final PsiFile currentFile, @NotNull final Editor currentEditor) {
+        final int offset = element.getTextOffset();
+        final PsiElement leaf = currentFile.findElementAt(offset);
         // check that element is really physically inside the file
         // there are fake elements with custom navigation (e.g. opening URL in browser) that override getContainingFile for various reasons
         if (leaf != null && PsiTreeUtil.isAncestor(element, leaf, false)) {
-            Project project = element.getProject();
+            final Project project = element.getProject();
             CommandProcessor.getInstance().executeCommand(project, () -> {
                 IdeDocumentHistory.getInstance(project).includeCurrentCommandAsNavigation();
                 new OpenFileDescriptor(project, currentFile.getViewProvider().getVirtualFile(), offset).navigateIn(currentEditor);

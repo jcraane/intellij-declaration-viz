@@ -49,23 +49,23 @@ public final class Arrow extends BaseVisualization {
         graphics.drawLine(start.x, startY, end.x - 2, endY - 2);
         drawArrowTip(graphics, start.x, startY, end.x, endY);
         if (config.isQuickJumpEnabled()) {
-            drawCircle(graphics, startY, endY, index);
-            drawIdentifier(graphics, startY, endY, index);
+            drawCircle(graphics, startY, endY, index, lineColor);
+            drawIdentifier(graphics, startY, endY, index, lineColor);
         }
     }
 
-    private void drawCircle(final Graphics2D graphics, final int startY, final int endY, final int index) {
+    private void drawCircle(final Graphics2D graphics, final int startY, final int endY, final int index, final Color lineColor) {
         final double distance = Math.sqrt(Math.pow((double) end.x - 2 - (double) start.x, 2) + Math.pow((double) endY - 2 - (double) startY, 2));
         final double rtCircle =  (BASE_DISTANCE + ((index + 1) * DISTANCE_NEW_INDEX_MULTIPLIER)) / distance;
         final double circleX, circleY;
         circleX = (1 - rtCircle) * start.x + rtCircle * end.x;
         circleY = (1 - rtCircle) * startY + rtCircle * endY;
         final Ellipse2D.Double circle = new Ellipse2D.Double(circleX, circleY, CIRCLE_SIZE, CIRCLE_SIZE);
-        graphics.setColor(new Color(27, 198, 141, 255));
+        graphics.setColor(lineColor);
         graphics.fill(circle);
     }
 
-    private void drawIdentifier(final Graphics2D graphics, final int startY, final int endY, final int index) {
+    private void drawIdentifier(final Graphics2D graphics, final int startY, final int endY, final int index, final Color lineColor) {
         final double distance = Math.sqrt(Math.pow((double) end.x - 2 - (double) start.x, 2) + Math.pow((double) endY - 2 - (double) startY, 2));
         final double rtCircle = (BASE_DISTANCE + ((index + 1) * DISTANCE_NEW_INDEX_MULTIPLIER)) / distance;
         final double idX, idY;

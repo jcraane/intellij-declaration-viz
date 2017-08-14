@@ -84,8 +84,12 @@ public class UsageVisualizationConfig implements PersistentStateComponent<UsageV
 
     @Override
     public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         final UsageVisualizationConfig that = (UsageVisualizationConfig) o;
         return Objects.equals(visualiztionType, that.visualiztionType) &&
                 Objects.equals(lineColor, that.lineColor);

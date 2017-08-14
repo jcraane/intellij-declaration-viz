@@ -16,8 +16,6 @@ public class BezierCurve extends BaseVisualization {
     private final Point start, end;
 
     private static final int CIRCLE_SIZE = 18;
-    public static final int BASE_DISTANCE = 40;
-    public static final int DISTANCE_NEW_INDEX_MULTIPLIER = 8;
 
     /**
      * @param start start of the line. The bezier curve must find the y pos based on this point.
@@ -44,13 +42,13 @@ public class BezierCurve extends BaseVisualization {
             endY += Y_OFFSET;
         }
 
-        int ctrlY;
+        final int ctrlY;
         if (startY < endY) {
             ctrlY = startY + Math.abs(endY - startY) / 2;
         } else {
             ctrlY = endY + Math.abs(endY - startY) / 2;
         }
-        int ctrlX = START_X;
+        final int ctrlX = START_X;
         final QuadCurve2D.Float curve = new QuadCurve2D.Float(start.x, startY, ctrlX, ctrlY, end.x, endY);
         graphics.draw(curve);
 
@@ -61,17 +59,17 @@ public class BezierCurve extends BaseVisualization {
         drawArrowTip(graphics, (int) left.getX2(), (int) left.getY2(), (int) right.getX2(), (int) right.getY2());
 
         if (config.isQuickJumpEnabled()) {
-            drawIdentifier(graphics, left, index);
+            drawIdentifier(graphics, left, index, lineColor);
         }
     }
 
-    private void drawIdentifier(final Graphics2D graphics, final QuadCurve2D.Float first, final int index) {
+    private void drawIdentifier(final Graphics2D graphics, final QuadCurve2D.Float first, final int index, final Color lineColor) {
         final QuadCurve2D.Float left = new QuadCurve2D.Float(0, 0, 0, 0, 0, 0);
         final QuadCurve2D.Float right = new QuadCurve2D.Float(0, 0, 0, 0, 0, 0);
         first.subdivide(left, right);
 
         final Ellipse2D.Double circle = new Ellipse2D.Double((int) left.x2 - (CIRCLE_SIZE / 2), (int) left.y2 - (CIRCLE_SIZE / 2), CIRCLE_SIZE, CIRCLE_SIZE);
-        graphics.setColor(new Color(27, 198, 141, 255));
+        graphics.setColor(lineColor);
         graphics.fill(circle);
         graphics.setColor(new Color(0, 0, 141, 255));
         graphics.drawString(getIdentifier(index), left.x2 - (CIRCLE_SIZE / 3), (float) (left.y2 + (CIRCLE_SIZE / 3)));
