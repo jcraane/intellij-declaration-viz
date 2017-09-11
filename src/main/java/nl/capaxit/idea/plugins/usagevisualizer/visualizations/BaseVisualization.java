@@ -8,7 +8,7 @@ import java.awt.*;
  * Created by jamiecraane on 12/04/2017.
  */
 public abstract class BaseVisualization implements UsageVisualization {
-    public static final char[] IDENTIFIERS = {'1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f',
+    private static final char[] IDENTIFIERS = {'1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f',
             'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
 
     protected final UsageVisualizationConfig config;
@@ -40,12 +40,8 @@ public abstract class BaseVisualization implements UsageVisualization {
         graphics.fillPolygon(xpoints, ypoints, 3);
     }
 
-    protected final String getIdentifier(final int index) {
-        if (index > IDENTIFIERS.length) {
-            return String.valueOf(IDENTIFIERS[IDENTIFIERS.length]);
-        }
-
-        return String.valueOf(IDENTIFIERS[index]);
+    public static final String getIdentifier(final int index) {
+        return String.valueOf(IDENTIFIERS[Math.min(index, IDENTIFIERS.length - 1)]);
     }
 
     protected final Color getCircleColor() {

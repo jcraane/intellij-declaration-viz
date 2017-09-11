@@ -81,7 +81,7 @@ public class UsageVisualizerAction extends AnAction {
     private void setupQuickJump(final List<PsiReference> references) {
         final HashMap<Character, PsiReference> characterPsiReferenceMap = new HashMap<>();
         for (int i = 0; i < references.size(); i++) {
-            characterPsiReferenceMap.put(BaseVisualization.IDENTIFIERS[i], references.get(i));
+            characterPsiReferenceMap.put(BaseVisualization.getIdentifier(i).charAt(0), references.get(i));
         }
 
         final EditorActionManager actionManager = EditorActionManager.getInstance();
