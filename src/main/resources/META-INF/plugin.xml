@@ -1,9 +1,9 @@
 <idea-plugin version="2">
     <id>nl.capaxit.idea.plugins.usagevisualizer</id>
     <name>UsageVisualizer</name>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <vendor email="jcraane@gmail.com" url="https://github.com/jcraane">Capax IT</vendor>
-    <idea-version since-build="145.1" until-build="173.*"/>
+    <idea-version since-build="145.1" until-build="181.*"/>
 
     <description><![CDATA[
         <h4>Usage Visualizer Plugin</h4>
